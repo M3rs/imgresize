@@ -69,10 +69,9 @@ fn main() {
 
     let filter: HashSet<&str> = matches.values_of("filter").unwrap()
         .collect();
-    //let size: u64 = matches.value_of("size").and_then(|x| Some(x.parse())).unwrap().unwrap();
     let size = value_t!(matches, "size", u64).unwrap_or_else(|e| e.exit());
-    let w: u32 = matches.value_of("width").and_then(|x| Some(x.parse())).unwrap().unwrap();
-    let h: u32 = matches.value_of("height").and_then(|x| Some(x.parse())).unwrap().unwrap();
+    let w = value_t!(matches, "width", u32).unwrap_or_else(|e| e.exit());
+    let h = value_t!(matches, "height").unwrap_or_else(|e| e.exit());
 
     let verbose = matches.is_present("verbose");
     let quality = value_t!(matches, "quality", u8).unwrap_or_else(|e| e.exit());
@@ -150,14 +149,4 @@ fn main() {
     bar.finish();
 
     println!("Done!");
-
-
-    /*
-    let path = "C:/Users/moran/Pictures/tmp/trees.jpg";
-
-    let img = image::open(path).unwrap();
-    let sml = img.resize(1920, 1080, image::imageops::Gaussian);
-    
-    sml.save("C:/Users/moran/Pictures/tmp/trees.jpg").unwrap();
-    */
 }
